@@ -1,4 +1,4 @@
-package proofOfWork
+package main
 
 import (
 	"bytes"
@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"math"
 	"math/big"
-	"myblockchain-go/src/internal/block"
-	"myblockchain-go/src/internal/utils"
 )
 
 var (
@@ -15,15 +13,15 @@ var (
 )
 
 const (
-	TARGET_BITS = 24
+	TARGET_BITS = 2
 )
 
 type ProofOfWork struct {
-	block  *block.Block
+	block  *Block
 	target *big.Int
 }
 
-func NewProofOfWork(b *block.Block) *ProofOfWork {
+func NewProofOfWork(b *Block) *ProofOfWork {
 	target := big.NewInt(1)
 	target.Lsh(target, uint(256-TARGET_BITS))
 
@@ -37,9 +35,9 @@ func (pow *ProofOfWork) prepareData(nonce int) []byte {
 		[][]byte{
 			pow.block.PrevBlockHash,
 			pow.block.Data,
-			utils.IntToHex(pow.block.Timestamp),
-			utils.IntToHex(int64(TARGET_BITS)),
-			utils.IntToHex(int64(nonce)),
+			IntToHex(pow.block.Timestamp),
+			IntToHex(int64(TARGET_BITS)),
+			IntToHex(int64(nonce)),
 		},
 		[]byte{},
 	)

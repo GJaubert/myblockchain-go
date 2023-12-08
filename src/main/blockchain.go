@@ -1,17 +1,15 @@
-package blockchain
-
-import "myblockchain-go/src/internal/block"
+package main
 
 type Blockchain struct {
-	Blocks []*block.Block
+	Blocks []*Block
 }
 
 func NewBlockchain() *Blockchain {
-	return &Blockchain{[]*block.Block{block.NewGenesisBlock()}}
+	return &Blockchain{[]*Block{NewGenesisBlock()}}
 }
 
 func (bc *Blockchain) AddBlock(data string) {
 	prevBlock := bc.Blocks[len(bc.Blocks)-1]
-	newBlock := block.NewBlock(data, prevBlock.Hash)
+	newBlock := NewBlock(data, prevBlock.Hash)
 	bc.Blocks = append(bc.Blocks, newBlock)
 }

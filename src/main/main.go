@@ -2,11 +2,10 @@ package main
 
 import (
 	"fmt"
-	"myblockchain-go/src/internal/blockchain"
 )
 
 func main() {
-	bc := blockchain.NewBlockchain()
+	bc := NewBlockchain()
 
 	bc.AddBlock("Send 1 BTC to Ivan")
 	bc.AddBlock("Send 2 more BTC to Ivan")
