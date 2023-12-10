@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/boltdb/bolt"
 )
 
 const (
-	DB_FILE       = "../../blockchain.db"
+	DB_FILE       = "blockchain.db"
 	BLOCKS_BUCKET = "blocks"
 )
 
@@ -64,7 +65,9 @@ func NewBlockchain() *Blockchain {
 		b := tx.Bucket([]byte(BLOCKS_BUCKET))
 
 		if b == nil {
+			fmt.Println("No existing blockchain found. Creating a new one...")
 			genesis := NewGenesisBlock()
+
 			b, err := tx.CreateBucket([]byte(BLOCKS_BUCKET))
 			if err != nil {
 				fmt.Println("Error " + err.Error())
@@ -87,6 +90,11 @@ func NewBlockchain() *Blockchain {
 
 		return nil
 	})
+
+	if err != nil {
+		log.Panic(err)
+	}
+
 	bc := Blockchain{tip, db}
 
 	return &bc
