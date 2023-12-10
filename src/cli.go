@@ -26,4 +26,16 @@ func (cli *CLI) Run() {
 		cli.printUsage()
 		os.Exit(1)
 	}
+
+	if addBlockCmd.Parsed() {
+		if *addBlockData == "" {
+			addBlockCmd.Usage()
+			os.Exit(1)
+		}
+		cli.addBlock(*addBlockData)
+	}
+
+	if printChainCmd.Parsed() {
+		cli.printChain()
+	}
 }
